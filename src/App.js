@@ -16,15 +16,15 @@ function App() {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        {authCtx.isLoggedIn ? (
-          <Route path="/profile">
-            <UserProfile />
-          </Route>
-        ) : (
+        {!authCtx.isLoggedin && (
           <Route path="/auth">
             <AuthPage />
           </Route>
         )}
+        <Route path="/profile">
+          {authCtx.isLoggedIn && <UserProfile />}
+          {!authCtx.isLoggedIn && <Redirect to="/auth" />}
+        </Route>
         <Route path="*">
           <Redirect to="/" />
         </Route>
