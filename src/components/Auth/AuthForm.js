@@ -68,7 +68,10 @@ const AuthForm = () => {
     fetch(endPoint, configuration)
       .then(handleResponse)
       .then((data) => {
-        authCtx.login(data.idToken);
+        const expirationTime = new Date(
+          new Date().getTime() + Number(data.expiresIn) * 1000
+        );
+        authCtx.login(data.idToken, expirationTime.toISOString());
         history.replace('/');
       })
       .catch(alertErrorMessage);
